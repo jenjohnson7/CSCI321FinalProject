@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_65" class="java.beans.XMLDecoder"> 
+ <object class="metasim.util.settings.ProjectSettings"> 
+  <void property="outputItems"> 
+   <void method="add"> 
+    <object class="metasim.util.settings.ProjectSettings$OutputItem"> 
+     <void property="log"> 
+      <string>Fri Apr 28 14:35:05 EDT 2017
+
+Simulating files:
+[Salmonella.mprf]
+
+Simulator Settings:
+Preset Name: Sanger
+Number Of Reads / Mate Pairs=5000
+Error Model=Sanger
+
+Sanger Error Model Read Length Parameters=
+Distribution: Normal
+Mean: 1000.0
+2nd parameter: 100.0
+
+Sanger Error Model Configuration=
+Mate Pair Probability: 1.0
+Error Rate at First Position: 0.0
+Error Rate at Last Position: 0.0
+Proportion of Deletion Errors: 0.0
+Proportion of Insertion Errors: 0.0
+Proportion of Substitution Errors: 1.0
+
+Sanger Error Model DNA Clone Parameters=
+Distribution: Normal
+Mean: 5000.0
+2nd parameter: 500.0
+
+Combine All Files=true
+Uniform Sequence Weights=false
+Number Of Threads=1
+Write FastA=true
+Compress Output Files=false
+
+Combining Files ...
++++ File: Salmonella.mprf +++
+
+     10000 Reads: `Salmonella bongori NCTC 12419&apos;
+
+Generated 10000 Reads
+Average Read Length is 1000.43 Base Pairs
+Processed 10004341 Base Pairs
+Generated 10004341 Base Pairs
+Insertions: 0
+Deletions: 0
+Substitutions: 0
+Read data saved as `Salmonella-Sanger.b5d85652.fna&apos;.
+Done.
+</string> 
+     </void> 
+     <void property="name"> 
+      <string>Fri Apr 28 14:35:05 EDT 2017</string> 
+     </void> 
+     <void property="readFiles"> 
+      <void method="add"> 
+       <string>Salmonella-Sanger.b5d85652.fna</string> 
+      </void> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+  <void property="projectName"> 
+   <string>Salmonella</string> 
+  </void> 
+  <void property="projectNotes"> 
+   <string>CSCI321 Final Project
+Spring 17
+Jen Johnson
+
+Paired DeBruijn Graph to construct the genome of Salmonella from error-free read pairs</string> 
+  </void> 
+  <void property="simSettings"> 
+   <void index="0"> 
+    <void property="errorModel"> 
+     <object class="metasim.util.settings.SimSettings$ErrorModels" method="valueOf"> 
+      <string>FOUR54</string> 
+     </object> 
+    </void> 
+    <void property="presetName"> 
+     <string>454</string> 
+    </void> 
+    <void id="SimSettings$SangerSettings0" property="sangerSettings"> 
+     <void property="deletions"> 
+      <double>0.0</double> 
+     </void> 
+     <void property="endError"> 
+      <double>0.0</double> 
+     </void> 
+     <void property="insertions"> 
+      <double>0.0</double> 
+     </void> 
+     <void property="readParameters"> 
+      <void property="fileName"> 
+       <string>insertsizes.txt</string> 
+      </void> 
+     </void> 
+     <void property="startError"> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+    <void id="SimSettings$EmpiricalSettings0" property="empiricalSettings"/> 
+    <void id="SimSettings$ExactSettings0" property="exactSettings"/> 
+    <void id="SimSettings$Four54Settings0" property="four54Settings"/> 
+   </void> 
+   <void method="add"> 
+    <object class="metasim.util.settings.SimSettings"> 
+     <void property="empiricalSettings"> 
+      <object idref="SimSettings$EmpiricalSettings0"/> 
+     </void> 
+     <void property="errorModel"> 
+      <object class="metasim.util.settings.SimSettings$ErrorModels" method="valueOf"> 
+       <string>EMPIRICAL</string> 
+      </object> 
+     </void> 
+     <void property="exactSettings"> 
+      <object idref="SimSettings$ExactSettings0"/> 
+     </void> 
+     <void property="four54Settings"> 
+      <object idref="SimSettings$Four54Settings0"/> 
+     </void> 
+     <void property="presetName"> 
+      <string>Empirical</string> 
+     </void> 
+     <void property="sangerSettings"> 
+      <object idref="SimSettings$SangerSettings0"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="metasim.util.settings.SimSettings"> 
+     <void property="combineAllFiles"> 
+      <boolean>true</boolean> 
+     </void> 
+     <void property="compression"> 
+      <boolean>false</boolean> 
+     </void> 
+     <void property="empiricalSettings"> 
+      <object idref="SimSettings$EmpiricalSettings0"/> 
+     </void> 
+     <void property="errorModel"> 
+      <object class="metasim.util.settings.SimSettings$ErrorModels" method="valueOf"> 
+       <string>SANGER</string> 
+      </object> 
+     </void> 
+     <void property="exactSettings"> 
+      <object idref="SimSettings$ExactSettings0"/> 
+     </void> 
+     <void property="four54Settings"> 
+      <object idref="SimSettings$Four54Settings0"/> 
+     </void> 
+     <void property="presetName"> 
+      <string>Sanger</string> 
+     </void> 
+     <void property="sangerSettings"> 
+      <object idref="SimSettings$SangerSettings0"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="metasim.util.settings.SimSettings"> 
+     <void property="empiricalSettings"> 
+      <object idref="SimSettings$EmpiricalSettings0"/> 
+     </void> 
+     <void property="exactSettings"> 
+      <object idref="SimSettings$ExactSettings0"/> 
+     </void> 
+     <void property="four54Settings"> 
+      <object idref="SimSettings$Four54Settings0"/> 
+     </void> 
+     <void property="presetName"> 
+      <string>Exact</string> 
+     </void> 
+     <void property="sangerSettings"> 
+      <object idref="SimSettings$SangerSettings0"/> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+  <void property="sourceFiles"> 
+   <void method="add"> 
+    <object class="metasim.util.settings.ProjectSettings$SimFile"> 
+     <void property="name"> 
+      <string>../CSCI321Chp10/Salmonella.mprf</string> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+ </object> 
+</java> 
