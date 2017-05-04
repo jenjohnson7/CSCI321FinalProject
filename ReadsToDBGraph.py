@@ -16,6 +16,9 @@ class db_node():
     def __eq__(self, other):
         return str(self) == str(other)
 
+    def __hash__(self):
+        return hash(str(self))
+
 def make_overlap(read_pairs):
     """ from input of read_pairs in the form of a list of nodes
         returns an overlap graph in the form of an adj list
@@ -27,12 +30,15 @@ def make_overlap(read_pairs):
         first_suffix = read_pairs[i].first[1:]
         second_suffix = read_pairs[i].second[1:]
         followers = []
+
         for j in range (0, len(read_pairs)):
             first_prefix = read_pairs[j].first[:-1]
             second_prefix = read_pairs[j].second[:-1]
             if first_suffix == first_prefix and second_suffix == second_prefix:
                 followers.append(read_pairs[j])
+
         result.append(followers)
+
     return result
 
 def make_DB(read_pairs, overlap):
@@ -76,6 +82,9 @@ def make_DB(read_pairs, overlap):
             total_followers = previous_followers + current_followers
             result[index].followers = total_followers
 
+    last_node = db_node(final, [])
+    result.append(last_node)
+
     return result
 
 def main():
@@ -87,22 +96,7 @@ def main():
 
     overlap = make_overlap(read_pairs)
 
-    # for i in range (0, len(overlap)):
-    #     print("entry")
-    #     print(read_pairs[i].first + "\t" + read_pairs[i].second)
-    #     print("list:")
-    #     for j in range (0, len(overlap[i])):
-    #         print(overlap[i][j].first + "\t" + overlap[i][j].second + "\n")
-
     DB = make_DB(read_pairs, overlap)
-
-    # for i in range(0, len(DB)):
-    #     print("entry")
-    #     current = DB[i]
-    #     print(current.kmer_node.first +"\t"+ current.kmer_node.second)
-    #     print("followers")
-    #     for current in current.followers:
-    #         print(current.first +"\t"+ current.second)
 
 if __name__ == "__main__":
     main()
