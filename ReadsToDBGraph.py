@@ -2,8 +2,19 @@
 CSCI 321 Spring 17 Final Project
 Create a Paired DB Graph from paired reads """
 
-from GenomeToReads import make_read_pairs
-from collections import OrderedDict
+from GenomeToReads import make_read_pairs, kmer_node
+
+class db_node():
+    """ type for holding k-1-mers and follower list """
+    def __init__(self, kmer_node, followers):
+        self.kmer_node = kmer_node
+        self.followers = followers
+
+    def __str__(self):
+        return str(self.kmer_node.first + self.kmer_node.second)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
 
 def make_overlap(read_pairs):
     """ from input of read_pairs in the form of a list of nodes
@@ -25,18 +36,46 @@ def make_overlap(read_pairs):
     return result
 
 def make_DB(read_pairs, overlap):
-    """ turns an overlap graph into DB graph by gluing identical nodes"""
-    result = OrderedDict()
+    """ turns an overlap graph into DB graph
+    stores kmer_nodes in db_nodes with list of followers (kmer_nodes) """
 
-    for i in range (0, len(overlap)):
-        if result.has_key(read_pairs[i]):
-            current_followers_set = set(result[overlap[i]])
-            for j in range (0, len(overlap[i])):
-                current_followers_set.add(overlap[i][j])
-            result[read_pairs[i]] = current_followers_set
+    result = []
+    keys = []
+
+    for i in range (0, len(read_pairs)):
+
+        first_prefix = read_pairs[i].first[:-1]
+        second_prefix = read_pairs[i].second[:-1]
+        key_node = kmer_node(first_prefix, second_prefix)
+
+        followers = []
+
+        if len(overlap[i])==0:
+            first_suffix = read_pairs[i].first[1:]
+            second_suffix = read_pairs[i].second[1:]
+            final = kmer_node(first_suffix, second_suffix)
+            followers.append(final)
+
+        for j in range (0, len(overlap[i])):
+            current_first = overlap[i][j].first[:-1]
+            current_second = overlap[i][j].second[:-1]
+            current_node = kmer_node(current_first, current_second)
+
+            if current_node not in followers:
+                followers.append(current_node)
+
+        if key_node not in keys:
+            entry_node = db_node(key_node, followers)
+            result.append(entry_node)
+            keys.append(key_node)
         else:
-            current_followers_set = set(overlap[i])
-            result[read_pairs[i]] = current_followers_set
+            new_entry = db_node(key_node, followers)
+            index = result.index(str(new_entry))
+            previous_followers = result[index].followers
+            current_followers = new_entry.followers
+            total_followers = previous_followers + current_followers
+            result[index].followers = total_followers
+
     return result
 
 def main():
@@ -56,6 +95,14 @@ def main():
     #         print(overlap[i][j].first + "\t" + overlap[i][j].second + "\n")
 
     DB = make_DB(read_pairs, overlap)
+
+    # for i in range(0, len(DB)):
+    #     print("entry")
+    #     current = DB[i]
+    #     print(current.kmer_node.first +"\t"+ current.kmer_node.second)
+    #     print("followers")
+    #     for current in current.followers:
+    #         print(current.first +"\t"+ current.second)
 
 if __name__ == "__main__":
     main()

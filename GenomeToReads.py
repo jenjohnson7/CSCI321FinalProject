@@ -8,6 +8,15 @@ class kmer_node():
         self.first = first
         self.second = second
 
+    def __str__(self):
+        return str(self.first + self.second)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    def __hash__(self):
+        return hash(str(self))
+
 def make_read_pairs(filename, k, d):
     """ makes each k,d mer into a node
         returns a list of nodes """
