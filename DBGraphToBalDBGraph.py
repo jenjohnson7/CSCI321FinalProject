@@ -1,8 +1,8 @@
 """ Jen Johnson
 CSCI 321 Spring 17 Final Project
-Find the Euler Cycle from a paired DB graph """
+Turns a paired DB graph into a balanced paired DB graph """
 
-from GenomeToReads import make_read_pairs, kmer_node
+from GenomeToReads import make_read_pairs, Kmer_Node
 from ReadsToDBGraph import make_overlap, make_DB
 
 def get_degrees(DB):
@@ -54,7 +54,7 @@ def make_balanced(DB, degree_dict):
     # insert the new edge as a kmer_node in the source's list of followers
     first = sink.kmer_node.first
     second = sink.kmer_node.second
-    new_sink = kmer_node(first, second)
+    new_sink = Kmer_Node(first, second)
 
     index = DB.index(source)
     DB[index].followers.append(new_sink)

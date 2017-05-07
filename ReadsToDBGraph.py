@@ -2,9 +2,9 @@
 CSCI 321 Spring 17 Final Project
 Create a Paired DB Graph from paired reads """
 
-from GenomeToReads import make_read_pairs, kmer_node
+from GenomeToReads import make_read_pairs, Kmer_Node
 
-class db_node():
+class DB_Node():
     """ type for holding k-1-mers and follower list """
     def __init__(self, kmer_node, followers):
         self.kmer_node = kmer_node
@@ -52,37 +52,37 @@ def make_DB(read_pairs, overlap):
 
         first_prefix = read_pairs[i].first[:-1]
         second_prefix = read_pairs[i].second[:-1]
-        key_node = kmer_node(first_prefix, second_prefix)
+        key_node = Kmer_Node(first_prefix, second_prefix)
 
         followers = []
 
         if len(overlap[i])==0:
             first_suffix = read_pairs[i].first[1:]
             second_suffix = read_pairs[i].second[1:]
-            final = kmer_node(first_suffix, second_suffix)
+            final = Kmer_Node(first_suffix, second_suffix)
             followers.append(final)
 
         for j in range (0, len(overlap[i])):
             current_first = overlap[i][j].first[:-1]
             current_second = overlap[i][j].second[:-1]
-            current_node = kmer_node(current_first, current_second)
+            current_node = Kmer_Node(current_first, current_second)
 
             if current_node not in followers:
                 followers.append(current_node)
 
         if key_node not in keys:
-            entry_node = db_node(key_node, followers)
+            entry_node = DB_Node(key_node, followers)
             result.append(entry_node)
             keys.append(key_node)
         else:
-            new_entry = db_node(key_node, followers)
+            new_entry = DB_Node(key_node, followers)
             index = result.index(str(new_entry))
             previous_followers = result[index].followers
             current_followers = new_entry.followers
             total_followers = previous_followers + current_followers
             result[index].followers = total_followers
 
-    last_node = db_node(final, [])
+    last_node = DB_Node(final, [])
     result.append(last_node)
 
     return result
