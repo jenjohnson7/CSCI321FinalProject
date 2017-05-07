@@ -27,7 +27,7 @@ def depth_first_search(DB, db_start, kmer_start, visited, current_cycle, all_cyc
             stack.append(follower)
 
 def get_all_e_cycles(DB):
-    """ runs DFS to find all Eulerean cycles in a balanced/cyclic DB"""
+    """ runs DFS to find all Eulerean cycles in a balanced/cyclic DB """
 
     all_cycles = []
 
