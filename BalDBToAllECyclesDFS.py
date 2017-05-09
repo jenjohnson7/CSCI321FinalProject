@@ -10,13 +10,9 @@ def dfs_all_cycles(DB, num_edges):
     """ runs DFS to find ALL Eulerean cycles in a balanced/cyclic DB """
 
     all_cycles = []
-
     start = DB[0]
-    print("start node " + str(start))
-    print("num_edges " + str(num_edges))
-
     seen_edges = 0
-
+    extra_edges = []
     current_cycle = []
     # cycles contain db_nodes
 
@@ -25,62 +21,99 @@ def dfs_all_cycles(DB, num_edges):
     # stack contains db_nodes
 
     while len(stack) != 0:
-
         current = stack.pop()
+        print(current)
 
-        if len(current_cycle) >0:
+        # print(len(all_cycles))
+
+        if len(current_cycle) > 0:
             prev = current_cycle[-1]
             print("want to remove " + str(current) + " from " + str(prev))
             prev.followers.remove(current)
-            print("just removed " + str(current) + " from " + str(prev))
-
-        print("just added " +str(current))
 
         seen_edges +=1
-
-        print(str(seen_edges) + " edges")
+        # print(seen_edges)
 
         if current == start and seen_edges == num_edges+1:
-            print("found a cycle")
+            print("found a cycle, need to reset to find more cycles")
             current_cycle.append(current)
-            if current_cycle not in all_cycles:
-                all_cycles.append(current_cycle)
+            for node in current_cycle:
+                print(node)
+            all_cycles.append(current_cycle)
 
-            # RESET TO PREVIOUS TO FIND MORE CYCLES
-            new_start = stack.pop()
-            while new_start != current:
-                current = current_cycle.pop()
-                prev = current_cycle[-1]
-                prev.followers.append(current)
-                seen_edges -=1
+            # RESET TO FIND MORE CYCLES
+            if len(stack)!=0:
+
+                print("Stack")
+                for r in stack:
+                    print(r)
+                print("ExE")
+                for x in extra_edges:
+                    print(x)
+
+                most_recent_alternative = extra_edges.pop()
+
+                # print("ExE")
+                # for x in extra_edges:
+                #     print(x)
+
+                count = 0
+                temp = []
+
+                for i in range (len(current_cycle)-1, 0, -1):
+                    temp.append(current_cycle[i])
+                    current = current_cycle.pop()
+                    if current==most_recent_alternative:
+                        count+=1
+                    if count==2:
+                        break
+
+                current_cycle.append(current)
+
+                for i in range (1, len(temp)):
+                    temp[i].followers.append(temp[i-1].kmer_node)
+
+                print("temp")
+                for node in temp:
+                    print(node)
+
+                print("dictionary")
+                for node in DB:
+                    print("entry "+ str(node))
+                    for x in node.followers:
+                        print(x)
+
+                seen_edges = len(current_cycle)
+                print("seen " + str(seen_edges))
 
         else:
             if len(current.followers) == 0:
-                print(stack[0])
-                print("Current_cycle")
-                for node in current_cycle:
-                    print(node)
+                print("need to backtrack ")
 
-                # RESET TO FIND A VALID CYCLE: HOW TO RE-ADD AFTER?????
-                print("need to backtrack")
+                # RESET TO FIND A VALID CYCLE
+                temp = []
+                temp.append(current)
                 while len(current.followers) == 0:
                     current = current_cycle.pop()
-                    prev = current_cycle[-1]
-                    prev.followers.append(current)
+                    temp.append(current)
                     seen_edges -= 1
 
-                print(num_edges)
-                print(current)
+                current_cycle.append(current)
+
+                for i in range (1, len(temp)):
+                    temp[i].followers.append(temp[i-1].kmer_node)
 
             else:
+                # normal case
                 current_cycle.append(current)
                 current_followers = []
-                print(str(len(current.followers)) + " followers to append")
+
+                if len(current.followers)>1:
+                    extra_edges.append(current)
 
                 for follower in current.followers:
                     db_follower = kmer_node_to_db_node(follower, DB)
                     stack.append(db_follower)
-                    print("follower " + str(follower) + " of " + str(current) + " appended")
 
     print("found " + str(len(all_cycles)) + " cycles")
     return all_cycles

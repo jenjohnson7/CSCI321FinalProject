@@ -6,30 +6,30 @@ from BalDBToECycles import get_all_graphs, get_e_cycles, construct_incoming, get
 from BalDBToAllECyclesDFS import dfs_all_cycles
 
 class TestECycles(unittest.TestCase):
-    def test_1_path(self):
-        print("test 1")
-        k = 3
-        d = 1
-        filename = "SampleGenome.txt"
-        read_pairs = make_read_pairs(filename, k, d)
-        overlap = make_overlap(read_pairs)
-        DB = make_DB(read_pairs, overlap)
-        degree_dict = get_degrees(DB)
-        balanced_DB = make_balanced(DB, degree_dict)
-        num_edges = get_num_edges(balanced_DB)
-        # METHOD ONE
-        # incoming = construct_incoming(DB)
-        # all_graphs = get_all_graphs(balanced_DB, incoming)
-        # all_cycles = get_e_cycles(all_graphs, incoming)
-
-        # METHOD TWO
-        all_cycles = dfs_all_cycles(balanced_DB, num_edges)
-
-        for cycle in all_cycles:
-            print("cycle")
-            for node in cycle:
-                print(node)
-
+    # def test_1_path(self):
+    #     print("test 1")
+    #     k = 3
+    #     d = 1
+    #     filename = "SampleGenome.txt"
+    #     read_pairs = make_read_pairs(filename, k, d)
+    #     overlap = make_overlap(read_pairs)
+    #     DB = make_DB(read_pairs, overlap)
+    #     degree_dict = get_degrees(DB)
+    #     balanced_DB = make_balanced(DB, degree_dict)
+    #     num_edges = get_num_edges(balanced_DB)
+    #     # METHOD ONE
+    #     # incoming = construct_incoming(DB)
+    #     # all_graphs = get_all_graphs(balanced_DB, incoming)
+    #     # all_cycles = get_e_cycles(all_graphs, incoming)
+    #
+    #     # METHOD TWO
+    #     all_cycles = dfs_all_cycles(balanced_DB, num_edges)
+    #
+    #     for cycle in all_cycles:
+    #         print("cycle")
+    #         for node in cycle:
+    #             print(node)
+    #
     # def test_2_distinct_paths(self):
     #     print("test 2")
     #     test_DB = []
@@ -49,11 +49,11 @@ class TestECycles(unittest.TestCase):
     #     num_edges = get_num_edges(test_DB)
     #     degree_dict = get_degrees(test_DB)
     #
-    #     # METHOD ONE
-    #     # incoming = construct_incoming(test_DB)
-    #     # all_graphs = get_all_graphs(test_DB, incoming)
-    #     # all_cycles = get_e_cycles(all_graphs, incoming)
-    #
+    # #     # METHOD ONE
+    # #     # incoming = construct_incoming(test_DB)
+    # #     # all_graphs = get_all_graphs(test_DB, incoming)
+    # #     # all_cycles = get_e_cycles(all_graphs, incoming)
+    # #
     #     #METHOD TWO
     #     all_cycles = dfs_all_cycles(test_DB, num_edges)
     #
@@ -61,37 +61,37 @@ class TestECycles(unittest.TestCase):
     #         print("cycle")
     #         for node in cycle:
     #             print(node)
-    #
-    # def test_2_paths_1_distinct(self):
-    #     print("test 3")
-    #     test_DB = []
-    #     A_kmer = Kmer_Node("A", "A")
-    #     B_kmer = Kmer_Node("B", "B")
-    #     C_kmer = Kmer_Node("C", "C")
-    #     D_kmer = Kmer_Node("D", "D")
-    #     A_db = DB_Node(A_kmer, [B_kmer, B_kmer, B_kmer])
-    #     test_DB.append(A_db)
-    #     B_db = DB_Node(B_kmer, [C_kmer, D_kmer, A_kmer])
-    #     test_DB.append(B_db)
-    #     C_db = DB_Node(C_kmer, [A_kmer])
-    #     test_DB.append(C_db)
-    #     D_db = DB_Node(D_kmer, [A_kmer])
-    #     test_DB.append(D_db)
-    #
-    #     num_edges = get_num_edges(test_DB)
-    #     degree_dict = get_degrees(test_DB)
-    #
+
+    def test_2_paths_1_distinct(self):
+        print("test 3")
+        test_DB = []
+        A_kmer = Kmer_Node("A", "A")
+        B_kmer = Kmer_Node("B", "B")
+        C_kmer = Kmer_Node("C", "C")
+        D_kmer = Kmer_Node("D", "D")
+        A_db = DB_Node(A_kmer, [B_kmer, B_kmer, B_kmer])
+        test_DB.append(A_db)
+        B_db = DB_Node(B_kmer, [C_kmer, D_kmer, A_kmer])
+        test_DB.append(B_db)
+        C_db = DB_Node(C_kmer, [A_kmer])
+        test_DB.append(C_db)
+        D_db = DB_Node(D_kmer, [A_kmer])
+        test_DB.append(D_db)
+
+        num_edges = get_num_edges(test_DB)
+        degree_dict = get_degrees(test_DB)
+
     #     # METHOD ONE
     #     # incoming = construct_incoming(test_DB)
     #     # all_graphs = get_all_graphs(test_DB, incoming)
     #     # all_cycles = get_e_cycles(all_graphs, incoming)
     #
-    #     all_cycles = dfs_all_cycles(test_DB, num_edges)
-    #
-    #     for cycle in all_cycles:
-    #         print("cycle")
-    #         for node in cycle:
-    #             print(node)
+        all_cycles = dfs_all_cycles(test_DB, num_edges)
+
+        for cycle in all_cycles:
+            print("cycle")
+            for node in cycle:
+                print(node)
 
 if __name__ == "__main__":
     unittest.main()
