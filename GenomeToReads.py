@@ -34,6 +34,9 @@ def make_read_pairs(filename, k, d):
         kmers.append(node)
 
     sorted_pairs = sorted(kmers, key = lambda node: node.first)
+
+    f.close()
+
     return sorted_pairs
 
 def main():
