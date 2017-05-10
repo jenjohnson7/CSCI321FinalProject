@@ -42,12 +42,7 @@ def make_read_pairs(filename, k, d):
     return sorted_pairs
 
 def main():
-
-    k = 3
-    d = 1
-    filename = "SampleGenome.txt"
-
-    read_pairs = make_read_pairs(filename, k, d)
+    print("running")
 
 if __name__ == "__main__":
     main()

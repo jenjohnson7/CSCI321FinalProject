@@ -1,6 +1,6 @@
 import unittest
-from GenomeToReads import make_read_pairs, Kmer_Node
-from ReadsToDBGraph import make_overlap, make_DB, DB_Node
+from GenomeToReadPairs import make_read_pairs, Kmer_Node
+from ReadPairsToDBGraph import make_overlap, make_DB, DB_Node
 from DBGraphToBalDBGraph import get_degrees, make_balanced
 from BalDBToAllECycles import dfs_all_cycles, get_num_edges
 from AllECyclesToAllPaths import cycle_to_path

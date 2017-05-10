@@ -2,8 +2,8 @@
 CSCI 321 Spring 17 Final Project
 Turns a paired DB graph into a balanced paired DB graph """
 
-from GenomeToReads import make_read_pairs, Kmer_Node
-from ReadsToDBGraph import make_overlap, make_DB
+from GenomeToReadPairs import make_read_pairs, Kmer_Node
+from ReadPairsToDBGraph import make_overlap, make_DB
 
 def get_degrees(DB):
     """ given input as a list of db_nodes, returns the degrees as a dictionary
@@ -64,19 +64,6 @@ def make_balanced(DB, degree_dict):
     return DB, outdegree, indegree, unbalanced
 
 def main():
-    k = 3
-    d = 1
-    filename = "SampleGenome.txt"
-
-    read_pairs = make_read_pairs(filename, k, d)
-
-    overlap = make_overlap(read_pairs)
-
-    DB = make_DB(read_pairs, overlap)
-
-    degree_dict = get_degrees(DB)
-
-    balanced_DB, outdegree, indegree, unbalanced = make_balanced(DB, degree_dict)
-
+    print("running")
 if __name__ == "__main__":
     main()

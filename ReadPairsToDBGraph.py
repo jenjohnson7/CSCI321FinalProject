@@ -2,7 +2,7 @@
 CSCI 321 Spring 17 Final Project
 Create a Paired DB Graph from paired reads """
 
-from GenomeToReads import make_read_pairs, Kmer_Node
+from GenomeToReadPairs import make_read_pairs, Kmer_Node
 
 class DB_Node():
     """ type for holding k-1-mers and follower list """
@@ -58,7 +58,7 @@ def make_DB(read_pairs, overlap):
         followers = []
 
         if len(overlap[i])==0:
-            # the last node 
+            # the last node
             first_suffix = read_pairs[i].first[1:]
             second_suffix = read_pairs[i].second[1:]
             final = Kmer_Node(first_suffix, second_suffix)
@@ -91,15 +91,7 @@ def make_DB(read_pairs, overlap):
     return result
 
 def main():
-    k = 3
-    d = 1
-    filename = "SampleGenome.txt"
-
-    read_pairs = make_read_pairs(filename, k, d)
-
-    overlap = make_overlap(read_pairs)
-
-    DB = make_DB(read_pairs, overlap)
+    print("running")
 
 if __name__ == "__main__":
     main()

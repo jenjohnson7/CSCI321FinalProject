@@ -2,8 +2,8 @@
 CSCI 321 Spring 17 Final Project
 Returns all ECycles """
 
-from GenomeToReads import make_read_pairs, Kmer_Node
-from ReadsToDBGraph import make_overlap, make_DB, DB_Node
+from GenomeToReadPairs import make_read_pairs, Kmer_Node
+from ReadPairsToDBGraph import make_overlap, make_DB, DB_Node
 from DBGraphToBalDBGraph import get_degrees, make_balanced
 
 def dfs_all_cycles(DB, num_edges):
