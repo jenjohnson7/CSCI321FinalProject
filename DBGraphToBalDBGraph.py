@@ -27,7 +27,9 @@ def get_degrees(DB):
 def make_balanced(DB, degree_dict):
     """ input is a list of db_nodes sorted lexicographically by first read in pair
     each node has kmer_node and a follower list of kmer_nodes
-    makes the DB graph balanced """
+    makes the DB graph balanced
+    returns the data structures used so that they don't have to be recalculated
+    when removing the edge """
 
     unbalanced = []
     outdegree = []
@@ -59,7 +61,7 @@ def make_balanced(DB, degree_dict):
     index = DB.index(source)
     DB[index].followers.append(new_sink)
 
-    return DB
+    return DB, outdegree, indegree, unbalanced
 
 def main():
     k = 3
@@ -72,29 +74,9 @@ def main():
 
     DB = make_DB(read_pairs, overlap)
 
-    # for i in range(0, len(DB)):
-    #     print("entry")
-    #     current = DB[i]
-    #     print(current.kmer_node.first +"\t"+ current.kmer_node.second)
-    #     print("followers " + str(len(current.followers)))
-    #     for current in current.followers:
-    #         print(current.first +"\t"+ current.second)
-
     degree_dict = get_degrees(DB)
 
-    # for entry in degree_dict:
-    #     print(entry.kmer_node.first + "\t" + entry.kmer_node.second)
-    #     print(degree_dict[entry])
-
-    balanced_DB = make_balanced(DB, degree_dict)
-
-    # for i in range(0, len(balanced_DB)):
-    #     print("entry")
-    #     current = balanced_DB[i]
-    #     print(current.kmer_node.first +"\t"+ current.kmer_node.second)
-    #     print("followers " + str(len(current.followers)))
-    #     for current in current.followers:
-    #         print(current.first +"\t"+ current.second)
+    balanced_DB, outdegree, indegree, unbalanced = make_balanced(DB, degree_dict)
 
 if __name__ == "__main__":
     main()

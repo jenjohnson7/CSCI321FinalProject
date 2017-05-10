@@ -28,11 +28,13 @@ def make_read_pairs(filename, k, d):
     kmers = []
 
     for i in range (0, len(genome)-(2*k+d)+1):
+        # splice into nodes
         first = genome[i:i+k]
         second = genome[i+k+d:i+2*k+d]
         node = Kmer_Node(first, second)
         kmers.append(node)
 
+    # sort by the first node
     sorted_pairs = sorted(kmers, key = lambda node: node.first)
 
     f.close()

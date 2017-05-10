@@ -32,6 +32,7 @@ def make_overlap(read_pairs):
         followers = []
 
         for j in range (0, len(read_pairs)):
+            # if prefix == suffix for both first and second, the nodes are adj
             first_prefix = read_pairs[j].first[:-1]
             second_prefix = read_pairs[j].second[:-1]
             if first_suffix == first_prefix and second_suffix == second_prefix:
@@ -57,6 +58,7 @@ def make_DB(read_pairs, overlap):
         followers = []
 
         if len(overlap[i])==0:
+            # the last node 
             first_suffix = read_pairs[i].first[1:]
             second_suffix = read_pairs[i].second[1:]
             final = Kmer_Node(first_suffix, second_suffix)
@@ -75,6 +77,7 @@ def make_DB(read_pairs, overlap):
             result.append(entry_node)
             keys.append(key_node)
         else:
+            # if already seen, update the existing entry
             new_entry = DB_Node(key_node, followers)
             index = result.index(str(new_entry))
             previous_followers = result[index].followers
