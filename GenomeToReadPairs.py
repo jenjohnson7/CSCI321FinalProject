@@ -39,7 +39,7 @@ def make_read_pairs(filename, k, d):
 
     f.close()
 
-    return sorted_pairs
+    return sorted_pairs, genome
 
 def main():
     print("running")

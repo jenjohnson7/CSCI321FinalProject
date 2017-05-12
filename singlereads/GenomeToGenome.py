@@ -5,6 +5,7 @@ Genome-->Single Reads-->DBGraph-->ECycle-->EPath-->Genome """
 from kmerDBGraph import kmer_DBGraph
 from EPath import E_Path, make_degree_dict
 from stringConstruct import string_construct
+from editDistance import edit_distance
 
 def make_reads(filename, k):
     """ makes each k,d mer into a node
@@ -21,7 +22,7 @@ def make_reads(filename, k):
 
     f.close()
 
-    return kmers, num_lines
+    return kmers, num_lines, genome
 
 def get_path(reads, num_lines):
     """ single reads to EPath """
@@ -44,14 +45,17 @@ def get_path(reads, num_lines):
     return final_path
 
 def main():
-    k = 3
-    filename = "SampleGenome.txt"
 
-    reads, num_lines = make_reads(filename, k)
+    # k = 3
+    # filename = "SampleGenome.txt"
+
+    reads, num_lines, first_genome = make_reads(filename, k)
 
     path = get_path(reads, num_lines)
 
-    print(path)
+    result = edit_distance(path, first_genome)
+
+    print(result)
 
 if __name__ == "__main__":
     main()

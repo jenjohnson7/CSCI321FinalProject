@@ -24,43 +24,38 @@ def dfs_all_cycles(DB, num_edges):
         current = stack.pop()
         # print(current)
 
-        # print(len(all_cycles))
-
         if len(current_cycle) > 0:
             prev = current_cycle[-1]
-            # print("want to remove " + str(current) + " from " + str(prev))
+            print("want to remove " + str(current) + " from " + str(prev))
             prev.followers.remove(current)
 
         seen_edges +=1
         # print(seen_edges)
 
         if current == start and seen_edges == num_edges+1:
-            # print("found a cycle, need to reset to find more cycles")
+            print("found a cycle, need to reset to find more cycles")
             current_cycle.append(current)
-            # for node in current_cycle:
-            #     print(node)
+            for node in current_cycle:
+                print(node)
             all_cycles.append(current_cycle)
 
             # RESET TO FIND MORE CYCLES
             if len(stack)!=0:
 
-                # print("Stack")
-                # for r in stack:
-                #     print(r)
-                # print("ExE")
-                # for x in extra_edges:
-                #     print(x)
+                print("Stack")
+                for r in stack:
+                    print(r)
+                print("ExE")
+                for x in extra_edges:
+                    print(x)
 
                 most_recent_alternative = extra_edges.pop()
-
-                # print("ExE")
-                # for x in extra_edges:
-                #     print(x)
+                print("MRA " + str(most_recent_alternative))
 
                 count = 0
                 temp = []
 
-                #ERROR HERE WITH HARDCODED 2?????
+                #HARDCODED 2?????
 
                 for i in range (len(current_cycle)-1, 0, -1):
                     temp.append(current_cycle[i])
@@ -72,12 +67,12 @@ def dfs_all_cycles(DB, num_edges):
 
                 current_cycle.append(current)
 
+                print("restarting ")
+                for node in current_cycle:
+                    print(node)
+
                 for i in range (1, len(temp)):
                     temp[i].followers.append(temp[i-1].kmer_node)
-
-                # print("temp")
-                # for node in temp:
-                #     print(node)
 
                 # print("dictionary")
                 # for node in DB:
@@ -90,7 +85,7 @@ def dfs_all_cycles(DB, num_edges):
 
         else:
             if len(current.followers) == 0:
-                # print("need to backtrack ")
+                print("need to backtrack ")
 
                 # RESET TO FIND A VALID CYCLE
                 temp = []
@@ -117,6 +112,10 @@ def dfs_all_cycles(DB, num_edges):
                     db_follower = kmer_node_to_db_node(follower, DB)
                     stack.append(db_follower)
 
+                print("Stack")
+                for r in stack:
+                    print(r)
+
     # print("found " + str(len(all_cycles)) + " cycles")
     return all_cycles
 
@@ -137,7 +136,7 @@ def get_num_edges(DB):
     return num_edges
 
 def main():
-    print("run the other file!!!")
+    print("run other file")
 
 if __name__ == "__main__":
     main()

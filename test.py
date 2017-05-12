@@ -12,7 +12,7 @@ class TestECycles(unittest.TestCase):
     #     k = 3
     #     d = 1
     #     filename = "SampleGenome.txt"
-    #     read_pairs = make_read_pairs(filename, k, d)
+    #     read_pairs, first_genome = make_read_pairs(filename, k, d)
     #     overlap = make_overlap(read_pairs)
     #     DB = make_DB(read_pairs, overlap)
     #     degree_dict = get_degrees(DB)
