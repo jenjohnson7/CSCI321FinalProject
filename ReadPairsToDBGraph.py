@@ -6,9 +6,10 @@ from GenomeToReadPairs import make_read_pairs, Kmer_Node
 
 class DB_Node():
     """ type for holding k-1-mers and follower list """
-    def __init__(self, kmer_node, followers):
+    def __init__(self, kmer_node, followers, num_incoming):
         self.kmer_node = kmer_node
         self.followers = followers
+        self.num_incoming = num_incoming
 
     def __str__(self):
         return str(self.kmer_node.first + self.kmer_node.second)
@@ -73,19 +74,19 @@ def make_DB(read_pairs, overlap):
                 followers.append(current_node)
 
         if key_node not in keys:
-            entry_node = DB_Node(key_node, followers)
+            entry_node = DB_Node(key_node, followers, 0)
             result.append(entry_node)
             keys.append(key_node)
         else:
             # if already seen, update the existing entry
-            new_entry = DB_Node(key_node, followers)
+            new_entry = DB_Node(key_node, followers, 0)
             index = result.index(str(new_entry))
             previous_followers = result[index].followers
             current_followers = new_entry.followers
             total_followers = previous_followers + current_followers
             result[index].followers = total_followers
 
-    last_node = DB_Node(final, [])
+    last_node = DB_Node(final, [], 0)
     result.append(last_node)
 
     return result

@@ -1,6 +1,7 @@
 """ Jen Johnson
 CSCI 321 Spring 17 Final Project
-Genome-->Single Reads-->DBGraph-->Contigs """
+Genome-->Single Reads-->DBGraph-->Contigs
+code take from previous Rosalind problems for Chapter 3"""
 
 def make_reads(filename, k):
     """ produces kmers from a file
@@ -75,7 +76,7 @@ def get_degrees(db_graph):
 
     return outdegrees, indegrees
 
-def maximum_nonbranching_path(db_graph, outgoing, incoming):
+def get_contigs(db_graph, outgoing, incoming):
     """ finds the collection of contigs in a DG graph from the form of adj_list"""
 
     keys = db_graph.keys()
@@ -103,13 +104,18 @@ def maximum_nonbranching_path(db_graph, outgoing, incoming):
     return paths
 
 def string_construct(kmers):
+    """ given an array of sorted overlapping kmers
+    returns the string by adding the last char of each kmer """
+
     result = kmers[0]
     for i in range (1, len(kmers)):
         result += kmers[i][-1]
     return result
 
 def genome_to_contigs(k, filename):
-    """ gets contigs of length k from filename containing genome """
+    """ gets contigs of De Bruijn graph
+    from reads of length k
+    from filename containing genome """
 
     reads = make_reads(filename, k)
 
@@ -117,7 +123,7 @@ def genome_to_contigs(k, filename):
 
     outgoing, incoming = get_degrees(db_graph)
 
-    paths = maximum_nonbranching_path(db_graph, outgoing, incoming)
+    paths = get_contigs(db_graph, outgoing, incoming)
 
     contigs = []
 
