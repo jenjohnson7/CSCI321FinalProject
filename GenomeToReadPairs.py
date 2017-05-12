@@ -21,9 +21,14 @@ def make_read_pairs(filename, k, d):
     """ makes each k,d mer into a node
         returns a list of nodes """
 
+    num_lines = sum(1 for line in open(filename))
+    genome = ""
+
     f = open(filename)
 
-    genome = next(f).strip()
+    # make the full genome string
+    for x in range (0, num_lines):
+        genome += next(f).strip()
 
     kmers = []
 
@@ -39,7 +44,7 @@ def make_read_pairs(filename, k, d):
 
     f.close()
 
-    return sorted_pairs, genome
+    return sorted_pairs
 
 def main():
     print("running")
