@@ -44,6 +44,8 @@ def make_read_pairs(filename, k, d):
 
     f.close()
 
+    print("genome of length " +str(len(genome)))
+
     return sorted_pairs
 
 def main():

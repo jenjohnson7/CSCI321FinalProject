@@ -76,23 +76,24 @@ def make_DB(read_pairs, last):
             total_followers = previous_followers + current_followers
             result[index].followers = total_followers
 
-    # last node
+    # add last node needed.
+    if type(last)!=int:
 
-    first_suffix = last.first[1:]
-    second_suffix = last.second[1:]
-    suffix_node = Kmer_Node(first_suffix, second_suffix)
+        first_suffix = last.first[1:]
+        second_suffix = last.second[1:]
+        suffix_node = Kmer_Node(first_suffix, second_suffix)
 
-    # Adding entry with followers == []
-    if suffix_node not in keys:
-        last_entry = DB_Node(suffix_node, [], 0)
-        result.append(last_entry)
-    else:
-        new_entry = DB_Node(prefix_node, [], 0)
-        index = result.index(str(new_entry))
-        previous_followers = result[index].followers
-        current_followers = new_entry.followers
-        total_followers = previous_followers + current_followers
-        result[index].followers = total_followers
+        # Adding entry with followers == []
+        if suffix_node not in keys:
+            last_entry = DB_Node(suffix_node, [], 0)
+            result.append(last_entry)
+        else:
+            new_entry = DB_Node(prefix_node, [], 0)
+            index = result.index(str(new_entry))
+            previous_followers = result[index].followers
+            current_followers = new_entry.followers
+            total_followers = previous_followers + current_followers
+            result[index].followers = total_followers
 
     return result
 

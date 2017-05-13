@@ -4,28 +4,38 @@ Comparing contigs of Salmonella genome using single and paired reads """
 
 from PairedReadsGenomeToContigs import genome_to_paired_contigs
 from SingleReadsGenomeToContigs import genome_to_single_contigs
+from numpy import mean
 
 def main():
 
-    filename = "SampleGenome.txt"
+    filename = "data/Salmonella1-20.txt"
 
-    k = 3
-    d = 1
+    k = 100
+    d = 50
 
     print("k " + str(k))
     print("d " + str(d))
 
-    paired_contigs = genome_to_paired_contigs(k, d, filename)
+    paired_paths = genome_to_paired_contigs(k, d, filename)
+
+    paired_contigs = []
+
+    for path in paired_paths:
+        paired_contigs.append(len(path))
 
     print("num paired contigs " + str(len(paired_contigs)))
-    for result in paired_contigs:
-        print(len(result))
+    avg = mean(paired_contigs)
+    print("avg len paired contig " + str(avg))
 
-    single_contigs = genome_to_single_contigs(k, filename)
+    single_paths = genome_to_single_contigs(k, filename)
 
+    single_contigs = []
+
+    for path in single_paths:
+        single_contigs.append(len(path))
     print("num single contigs " + str(len(single_contigs)))
-    for result in single_contigs:
-        print(len(result))
+    avg = sum(single_contigs)/len(single_contigs)
+    print("avg len single contig " + str(avg))
 
 if __name__ == "__main__":
     main()
