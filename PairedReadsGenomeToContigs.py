@@ -1,9 +1,9 @@
 """ Jen Johnson
 CSCI 321 Spring 17 Final Project
-Paired DeBruijn Graph to reconstruct Salmonella Genome """
+Paired DeBruijn Graph to reconstruct Salmonella Genome using Contigs """
 
 from GenomeToReadPairs import make_read_pairs, Kmer_Node
-from ReadPairsToDBGraph import make_overlap, make_DB, DB_Node
+from ReadPairsToDBGraph import make_DB, find_last, DB_Node
 from DBGraphToContigs import make_contigs, kmer_node_to_db_node
 
 def get_indegrees(DB):
@@ -14,20 +14,23 @@ def get_indegrees(DB):
             db_follower = kmer_node_to_db_node(kmer_follower, DB)
             db_follower.num_incoming+=1
 
-def genome_to_contigs(k, d, filename):
+def genome_to_paired_contigs(k, d, filename):
     """ gets contigs of paired De Bruijn graph
     from read pairs of length 2k+d
     from filename containing genome """
 
     read_pairs = make_read_pairs(filename, k, d)
+    print("made paired read pairs")
 
-    overlap = make_overlap(read_pairs)
+    last = find_last(read_pairs)
 
-    DB = make_DB(read_pairs, overlap)
+    DB = make_DB(read_pairs, last)
+    print("made paired DB")
 
     get_indegrees(DB)
 
     contigs = make_contigs(DB)
+    print("made paired contigs")
 
     return contigs
 
@@ -37,7 +40,7 @@ def main():
     k = 3
     d = 1
 
-    contigs = genome_to_contigs(k, d, filename)
+    contigs = genome_to_paired_contigs(k, d, filename)
 
     print("num contigs")
     print(len(contigs))

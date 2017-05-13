@@ -20,10 +20,9 @@ class DB_Node():
     def __hash__(self):
         return hash(str(self))
 
-def make_overlap(read_pairs):
-    """ from input of read_pairs in the form of a list of nodes
-        returns an overlap graph in the form of an adj list
-        where i-->j where the suffix of both reads in i == prefix of both reads in j"""
+def find_last(read_pairs):
+    """ makes overlap graph using kmers to find the last node with no followers
+    needed to add the last node to the DB graph """
 
     result = []
 
@@ -41,53 +40,59 @@ def make_overlap(read_pairs):
 
         result.append(followers)
 
-    return result
+    final_result = 0
+    for i in range (0, len(result)):
+        if len(result[i])==0:
+            final_result = read_pairs[i]
 
-def make_DB(read_pairs, overlap):
-    """ turns an overlap graph into DB graph
+    return final_result
+
+def make_DB(read_pairs, last):
+    """ turns read_pairs into a paired DB graph
     stores kmer_nodes in db_nodes with list of followers (kmer_nodes) """
 
-    result = []
-    keys = []
+    result = [] # holds db_nodes
+    keys = [] # holds kmer_nodes
 
     for i in range (0, len(read_pairs)):
-
         first_prefix = read_pairs[i].first[:-1]
         second_prefix = read_pairs[i].second[:-1]
-        key_node = Kmer_Node(first_prefix, second_prefix)
+        prefix_node = Kmer_Node(first_prefix, second_prefix)
 
-        followers = []
+        first_suffix = read_pairs[i].first[1:]
+        second_suffix = read_pairs[i].second[1:]
+        suffix_node = Kmer_Node(first_suffix, second_suffix)
 
-        if len(overlap[i])==0:
-            # the last node
-            first_suffix = read_pairs[i].first[1:]
-            second_suffix = read_pairs[i].second[1:]
-            final = Kmer_Node(first_suffix, second_suffix)
-            followers.append(final)
-
-        for j in range (0, len(overlap[i])):
-            current_first = overlap[i][j].first[:-1]
-            current_second = overlap[i][j].second[:-1]
-            current_node = Kmer_Node(current_first, current_second)
-
-            if current_node not in followers:
-                followers.append(current_node)
-
-        if key_node not in keys:
-            entry_node = DB_Node(key_node, followers, 0)
+        if prefix_node not in keys:
+            entry_node = DB_Node(prefix_node, [suffix_node], 0)
             result.append(entry_node)
-            keys.append(key_node)
+            keys.append(prefix_node)
         else:
             # if already seen, update the existing entry
-            new_entry = DB_Node(key_node, followers, 0)
+            new_entry = DB_Node(prefix_node, [suffix_node], 0)
             index = result.index(str(new_entry))
             previous_followers = result[index].followers
             current_followers = new_entry.followers
             total_followers = previous_followers + current_followers
             result[index].followers = total_followers
 
-    last_node = DB_Node(final, [], 0)
-    result.append(last_node)
+    # last node
+
+    first_suffix = last.first[1:]
+    second_suffix = last.second[1:]
+    suffix_node = Kmer_Node(first_suffix, second_suffix)
+
+    # Adding entry with followers == []
+    if suffix_node not in keys:
+        last_entry = DB_Node(suffix_node, [], 0)
+        result.append(last_entry)
+    else:
+        new_entry = DB_Node(prefix_node, [], 0)
+        index = result.index(str(new_entry))
+        previous_followers = result[index].followers
+        current_followers = new_entry.followers
+        total_followers = previous_followers + current_followers
+        result[index].followers = total_followers
 
     return result
 

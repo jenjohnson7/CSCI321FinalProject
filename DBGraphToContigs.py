@@ -1,6 +1,6 @@
 """ Jen Johnson
 CSCI 321 Spring 17 Final Project
-Paired DeBruijn Graph to reconstruct Salmonella Genome """
+Paired De Bruijn Graph to Contigs """
 
 def kmer_node_to_db_node(kmer_node, DB):
     """ returns db_node with db_node.kmer_node == kmer_node """
@@ -22,19 +22,19 @@ def make_contigs(db_graph):
                 # go through these followers...
                 for kmer_follower in node.followers:
                     # start a contig
-                    db_follower = kmer_node_to_db_node(kmer_follower, db_graph)
-                    current_path = [node, db_follower]
+                    current_node = kmer_node_to_db_node(kmer_follower, db_graph)
+                    current_path = [node, current_node]
                     # extend the contig if followers are 1-in-1-out
-                    current_node = db_follower
-                    while len(current_node.followers)==1 and node.num_incoming==1:
+                    while len(current_node.followers)==1 and current_node.num_incoming==1:
                         #update the current node
                         #always be the first and only follower of current_node
                         #[0] because you need an int, not a list
-                        current_node = kmer_node_to_db_node(current_node.followers[0], DB)
+                        current_node = kmer_node_to_db_node(current_node.followers[0], db_graph)
                         current_path.append(current_node)
                     paths.append(current_path)
 
     return paths
+
 def main():
     print("running")
 

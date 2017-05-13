@@ -1,7 +1,7 @@
 """ Jen Johnson
 CSCI 321 Spring 17 Final Project
 Genome-->Single Reads-->DBGraph-->Contigs
-code take from previous Rosalind problems for Chapter 3"""
+code take from previous Rosalind problems for Chapter 3 """
 
 def make_reads(filename, k):
     """ produces kmers from a file
@@ -29,7 +29,7 @@ def make_reads(filename, k):
 
 def kmer_DBGraph(kmers):
     """  makes a dictionary where key == prefix, and value == suffix
-    combines overlap graph and db graph steps into one"""
+    combines overlap graph and db graph steps into one """
 
     result_dict = dict()
 
@@ -77,7 +77,9 @@ def get_degrees(db_graph):
     return outdegrees, indegrees
 
 def get_contigs(db_graph, outgoing, incoming):
-    """ finds the collection of contigs in a DG graph from the form of adj_list"""
+    """ finds the collection of contigs in a Db graph
+    db_graph is n an adjacency list
+    returns contigs as an array of an array of nodes """
 
     keys = db_graph.keys()
     paths = []
@@ -104,7 +106,7 @@ def get_contigs(db_graph, outgoing, incoming):
     return paths
 
 def string_construct(kmers):
-    """ given an array of sorted overlapping kmers
+    """ given an array of sorted overlapping nodes
     returns the string by adding the last char of each kmer """
 
     result = kmers[0]
@@ -112,18 +114,21 @@ def string_construct(kmers):
         result += kmers[i][-1]
     return result
 
-def genome_to_contigs(k, filename):
+def genome_to_single_contigs(k, filename):
     """ gets contigs of De Bruijn graph
     from reads of length k
     from filename containing genome """
 
     reads = make_reads(filename, k)
+    print("made single reads")
 
     db_graph = kmer_DBGraph(reads)
+    print("made single DB")
 
     outgoing, incoming = get_degrees(db_graph)
 
     paths = get_contigs(db_graph, outgoing, incoming)
+    print("made single contigs")
 
     contigs = []
 
@@ -136,13 +141,14 @@ def main():
     k = 3
     filename = "SampleGenome.txt"
 
-    contigs = genome_to_contigs(k, filename)
+    contigs = genome_to_single_contigs(k, filename)
 
     print("num contigs")
     print(len(contigs))
     print("len of each contig")
     for contig in contigs:
         print(len(contig))
+        # print(contig)
 
 if __name__ == "__main__":
     main()
