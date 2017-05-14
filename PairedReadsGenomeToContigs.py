@@ -1,6 +1,6 @@
 """ Jen Johnson
 CSCI 321 Spring 17 Final Project
-Paired DeBruijn Graph to reconstruct Salmonella Genome using Contigs """
+Produce contigs from paired reads """
 
 from GenomeToReadPairs import make_read_pairs, Kmer_Node
 from ReadPairsToDBGraph import make_DB, find_last, DB_Node
