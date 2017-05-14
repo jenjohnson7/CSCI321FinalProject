@@ -8,10 +8,10 @@ from numpy import mean
 
 def main():
 
-    filename = "data/Salmonella1-20.txt"
+    filename = "data/Salmonella1-50.txt"
 
-    k = 100
-    d = 50
+    k = 50
+    d = 300
 
     print("k " + str(k))
     print("d " + str(d))
