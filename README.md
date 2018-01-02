@@ -1,6 +1,8 @@
 # CSCI321FinalProject
 Paired De Bruijn Graph of Salmonella Genome 
 
+Results/Poster is the pdf file (JJohnsonFinalProject.pdf)
+
 Results.py is main file.
 Parameters:
 k
